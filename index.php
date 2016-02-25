@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<script type="text/javascript">
+    function openPopUP() {
+        fenster = window.open("createAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+        fenster.focus();
+    }
+</script>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>EBay für Arme - Login</title>
+<link rel="stylesheet" type="text/css" href="Style.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="Login.js"></script>
+    </head>
+    <header>
+     <!--   <img src="Logo.png" alt=""> -->
+    </header>
+    <body>
+        
+    <div id="div1">
+        <div id="div2" style=""> 
+            <div id="divForm">
+                Bitte loggen Sie sich ein: <br><br>
+                <label for="username">Benutzername:</label> <input type="text" id="username"><br>
+                <label for="pw">Passwort:</label> <input type="password" id="pw"> <br><br>
+                <input id="login" type="submit" value="LogIn"></input> 
+                <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP(); return false"></input><br>
+                <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
+            </div>
+        </div>
+    </div>
+    </body>
+</html>
