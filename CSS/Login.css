@@ -18,38 +18,80 @@ and open the template in the editor.
 Img{
     height:25%;
     width:25%;
+    -webkit-transition: all 3s ease-in; /* Firefox */
+-moz-transition: all 3s ease-in; /* WebKit */
+-o-transition: all 3s ease-in; /* Opera */
+transition: all 3s ease-in; /* Standard */
 }
 header {
     display: flex;
     flex: 0 1 100%;
-    justify-content: center;
+    justify-content: start;
     align-item: center;
     align-content: center;
     order: 0;
     margin-top: 0px;
     height: 25%;
+    
+    
+-webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
+       -moz-animation: fadein 2s; /* Firefox < 16 */
+        -ms-animation: fadein 2s; /* Internet Explorer */
+         -o-animation: fadein 2s; /* Opera < 12.1 */
+            animation: fadein 2s;
 
     
 }
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:3s;
+  -moz-animation-duration:3s;
+  animation-duration:5s;
+}
+
+.fade-in.one {
+  -webkit-animation-delay: 8.0 s;
+  -moz-animation-delay: 8.0 s;
+  animation-delay: 8.0 s;
+}
+
+.fade-in.two {
+  -webkit-animation-delay: 12.5s;
+  -moz-animation-delay:12.5s;
+  animation-delay: 12.5s;
+}
+
+.fade-in.three {
+  -webkit-animation-delay: 1.6s;
+  -moz-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
+
+/*---make a basic box ---*/
+
 
 /*This Containter contains and organizes the fundamental structure of the webpage
 	contains: Header, Nav,Mainsection footer etc. */
-#flexContainer {
-    display: flex;
-    flex-flow: row wrap;
-    align-content: stretch;
-    justify-content:space-around;
-    align-item: stretch;
-    min-height: 100%;
-    /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#45484d+0,000000+100;Black+3D+%231 */
 
-}
 
 body {
 
 
-background: linear-gradient(to bottom,  #000000 0%,#6d4a4b 50%,#000000 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-
+    background-image: URL("http://www.schonewallpaper.de/static/images/b807c2282ab0a491bd5c5c1051c6d312_wnsNQU8.jpg");
+    background-size: 100%;
+    
  display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
@@ -110,4 +152,4 @@ background: linear-gradient(to bottom,  #000000 0%,#6d4a4b 50%,#000000 100%); /*
 Input{
     width:20%;
     height:10%;
-}
+}s

@@ -19,11 +19,11 @@ and open the template in the editor.
 <script type="text/javascript" src="Login.js"></script>
     </head>
     <header>
-     <img src="Images/Logo.png" alt=""> 
+     <img src="Images/Logo.png" alt="" class="fade-in ,one"> 
     </header>
     <body>
         
-    <div id="InputElements">
+    <div id="InputElements" class="fade-in two">
                 Bitte loggen Sie sich ein: <br><br>
                 <label for="username">Benutzername:</label> <input type="text" id="username"><br>
                 <label for="pw">Passwort:</label> <input type="password" id="pw"> <br><br>
