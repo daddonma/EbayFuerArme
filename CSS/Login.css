@@ -1,0 +1,79 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 29.02.2016, 08:57:15
+    Author     : Brian
+*/
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: arial;
+    color:#000;
+}
+Img{
+    height:25%;
+    width:25%;
+}
+header {
+    display: flex;
+    flex: 0 1 100%;
+    justify-content: center;
+    align-item: center;
+    align-content: center;
+    background: rgba(255,255,255, 1);
+    order: 0;
+    margin-top: 0px;
+    height: 25%;
+
+    
+}
+
+/*This Containter contains and organizes the fundamental structure of the webpage
+	contains: Header, Nav,Mainsection footer etc. */
+#flexContainer {
+    display: flex;
+    flex-flow: row wrap;
+    align-content: stretch;
+    justify-content:space-around;
+    align-item: stretch;
+    min-height: 100%;
+}
+
+body {
+    background: RGBA(255,255,255, 1.0);
+        display: flex;
+    flex: 0 1 100%;
+    justify-content: center;
+    align-item: center;
+    align-content: center;
+    order: 1;
+    margin-top: 0px;
+    padding:2%;
+    height: 25%;
+
+}
+
+#InputElements{
+    display: flex;
+    order:1;
+    flex-direction:column;
+    flex: 0 1 100%;
+    justify-content: center;
+    align-item: center;
+    align-content: center;
+    background: rgba(255,0,255, 1);
+    margin-top: 1%;
+    height: 25%;
+    -webkit-align-items: center;
+   align-items: center;
+   -webkit-justify-content: center;
+   justify-content: center;
+}
+
+Input{
+    width:20%;
+}
