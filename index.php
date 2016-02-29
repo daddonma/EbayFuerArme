@@ -18,7 +18,6 @@ and open the template in the editor.
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script type="text/javascript" src="Login.js"></script>
     </head>
-    <div id="flexContainer">
     <header>
      <img src="Images/Logo.png" alt=""> 
     </header>
@@ -33,5 +32,4 @@ and open the template in the editor.
                 <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
     </div>
     </body>
-    </div>
 </html>
