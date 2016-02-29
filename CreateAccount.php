@@ -12,7 +12,6 @@
             <label for="username">Benutzername:</label> <input type="text" name="username" id="newUsername"><br>
             <label for="pw">Passwort:</label> <input type="password" name="pw" id="newPW"> <br><br>
             <input id="create" type="submit" value="Account erstellen"></input> 
-            
             <?php
         } else {
             

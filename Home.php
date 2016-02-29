@@ -5,24 +5,37 @@
     <head>
         <meta charset="UTF-8">
         <title>EBay für Arme - Login</title>
-      
         <link rel="stylesheet" type="text/css" href="Style.css" />
     </head>
     <body>
+       
        <?php 
             echo "Login erfolgreich als " . $_SESSION['username'] . "<br>";
-            
             $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die (mysql_error());
             echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
             
-            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+            if(!isset($_POST["suche"])) {
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
-            $result = mysqli_query($dbConnect, $query);
-            
-            echo "Angebotene Artikel: <br>";
-            
+                $result = mysqli_query($dbConnect, $query);
+            }
+            else {
+                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                      FROM produkte, kategorie, user, auktion
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
+              // echo $query;
+                 $result = mysqli_query($dbConnect, $query);
+            }
         ?>
+          <form action="Home.php" method="POST">
+            Suchen: <input type="text" name="suche">
+            <input type="submit" value="suche">
+            
+        </form>
+         
+      
+        Angebotene Artikel: <br>
         <table>
             <th>
                 <b> Bezeichnung </b>
