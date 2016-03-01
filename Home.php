@@ -1,10 +1,15 @@
+
+
 <html>
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="JavaScript/js_data.js"></script>
     <?php
     session_start();
     ?>
     <head>
         <meta charset="UTF-8">
-        <title>EBay für Arme - Login</title>
+        <title>EBay für Arme</title>
         <link rel="stylesheet" type="text/css" href="Style.css" />
     </head>
     <body>
@@ -28,12 +33,21 @@
                  $result = mysqli_query($dbConnect, $query);
             }
         ?>
-          <form action="Home.php" method="POST">
-            Suchen: <input type="text" name="suche">
+        
+        Suchen nach:<br>
+       
+        Beschreibung: <input type="radio" id="suche_beschreibung">
+        Kategorie: <input type="radio" id="suche_kategorie"><br><br>
+          
+        <form id="suchfeld_beschreibung" action="Home.php" method="POST">
+            Suchen: <input id="" type="text" name="suche">
             <input type="submit" value="suche">
-            
         </form>
          
+        <form id="suchfeld_kategorie" action="Home.php" method="POST">
+            Kategorie: <input  type="text" name="suche">
+            <input type="submit" value="suche">
+        </form>
       
         Angebotene Artikel: <br>
         <table>
