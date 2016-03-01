@@ -12,11 +12,11 @@ and open the template in the editor.
     margin: 0;
     padding: 0;
     font-family: arial;
-    font-size: 16px;
+    font-size: 100px;
     color:#000;
 }
 Img{
-    height:25%;
+    height:1000px;
     width:25%;
     -webkit-transition: all 3s ease-in; /* Firefox */
 -moz-transition: all 3s ease-in; /* WebKit */
@@ -31,7 +31,7 @@ header {
     align-content: center;
     order: 0;
     margin-top: 0px;
-    height: 25%;
+    min-height: 1000px;
     
     
 -webkit-animation: fadein 2s; /* Safari, Chrome and Opera > 12.1 */
@@ -42,57 +42,12 @@ header {
 
     
 }
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-
-.fade-in {
-  opacity:0;  /* make things invisible upon start */
-  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
-  -moz-animation:fadeIn ease-in 1;
-  animation:fadeIn ease-in 1;
-
-  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
-  -moz-animation-fill-mode:forwards;
-  animation-fill-mode:forwards;
-
-  -webkit-animation-duration:3s;
-  -moz-animation-duration:3s;
-  animation-duration:5s;
-}
-
-.fade-in.one {
-  -webkit-animation-delay: 8.0 s;
-  -moz-animation-delay: 8.0 s;
-  animation-delay: 8.0 s;
-}
-
-.fade-in.two {
-  -webkit-animation-delay: 12.5s;
-  -moz-animation-delay:12.5s;
-  animation-delay: 12.5s;
-}
-
-.fade-in.three {
-  -webkit-animation-delay: 1.6s;
-  -moz-animation-delay: 1.6s;
-  animation-delay: 1.6s;
-}
-
-/*---make a basic box ---*/
-
-
-/*This Containter contains and organizes the fundamental structure of the webpage
-	contains: Header, Nav,Mainsection footer etc. */
 
 
 body {
 
 
-    background-image: URL("http://www.schonewallpaper.de/static/images/b807c2282ab0a491bd5c5c1051c6d312_wnsNQU8.jpg");
-    background-size: 100%;
-    
- display: -ms-flexbox;
+    display: -ms-flexbox;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;
@@ -104,15 +59,38 @@ body {
     -webkit-justify-content: flex-start;
     -ms-flex-pack: start;
     justify-content: flex-start;
-    -webkit-align-content: stretch;
-    -ms-flex-line-pack: stretch;
-    align-content: stretch;
-    -webkit-align-items: stretch;
-    -ms-flex-align: stretch;
-    align-items: stretch;
+    -webkit-align-content: flex-start;
+    -ms-flex-line-pack: start;
+    align-content: flex-start;
+    -webkit-align-items: flex-start;
+    -ms-flex-align: start;
+    align-items: flex-start;
+    
+    
+    background-image: URL("http://images.123hdwallpapers.com/20150518/shopping-wallpaper-1920x1080.jpg");
+    background-size: 100%;
+    
+   
     padding:2%;
     min-height:100%;
 
+}
+input[type="text"]
+{
+    font-size:100px;
+}
+
+
+Input{
+/* this */
+  flex: 1 auto;
+
+  /* is the same as */
+  flex-grow: 1;
+  
+
+  /* and it leaves the flex-shrink property alone, which would be */
+  flex-grow: inherit; /* defaults to 1 */       
 }
 
 #InputElements{
@@ -125,6 +103,8 @@ body {
     display: flex;
         flex: 0 1 100%;
 
+ 
+        padding:70px;
     
     -webkit-flex-direction: column;
     -ms-flex-direction: column;
@@ -142,14 +122,52 @@ body {
     -ms-flex-align: stretch;
     align-items: stretch;
     margin-top: 1%;
-    -webkit-align-items: center;
-   align-items: center;
-   -webkit-justify-content: center;
-   justify-content: center;
+    -webkit-align-items: start;
+   align-items: start;
+   -webkit-justify-content: start;
+   justify-content: start;
    
 }
 
-Input{
-    width:20%;
-    height:10%;
-}s
+@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+
+.fade-in {
+  opacity:0;  /* make things invisible upon start */
+  -webkit-animation:fadeIn ease-in 1;  /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+  -moz-animation:fadeIn ease-in 1;
+  animation:fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode:forwards;  /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -moz-animation-fill-mode:forwards;
+  animation-fill-mode:forwards;
+
+  -webkit-animation-duration:2s;
+  -moz-animation-duration:2s;
+  animation-duration:2s;
+}
+
+.fade-in.one {
+  -webkit-animation-delay: 1.0 s;
+  -moz-animation-delay: 1.0 s;
+  animation-delay: 1.0 s;
+}
+
+.fade-in.two {
+  -webkit-animation-delay: 3s;
+  -moz-animation-delay:3s;
+  animation-delay: 3s;
+}
+
+.fade-in.three {
+  -webkit-animation-delay: 1.6s;
+  -moz-animation-delay: 1.6s;
+  animation-delay: 1.6s;
+}
+
+/*---make a basic box ---*/
+
+
+/*This Containter contains and organizes the fundamental structure of the webpage
+	contains: Header, Nav,Mainsection footer etc. */
