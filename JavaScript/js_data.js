@@ -14,8 +14,10 @@ $(document).ready(function(){
         
         if(count_beschreibung%2 == 0 ) {
             $('#suchfeld_beschreibung').hide();
+            $('#suche_beschreibung').attr('checked', false);
         } else {
             $('#suchfeld_beschreibung').show();
+            $('#suche_beschreibung').attr('checked', true);
         }
         
     });
@@ -27,8 +29,10 @@ $(document).ready(function(){
         
      if(count_kategorie%2 == 0 ) {
             $('#suchfeld_kategorie').hide();
+            $('#suche_kategorie').attr('checked', false);
         } else {
             $('#suchfeld_kategorie').show();
+            $('#suche_kategorie').attr('checked', true);
         }
         
     });

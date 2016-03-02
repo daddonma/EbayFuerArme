@@ -19,21 +19,27 @@
             $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die (mysql_error());
             echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
             
-            if(!isset($_POST["suche"])) {
+            if(isset($_POST["suche"])) {
                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
-                $result = mysqli_query($dbConnect, $query);
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
+                
+            } else if (isset($_POST['suche_kategorie'])) {
+                
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                      FROM produkte, kategorie, user, auktion
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
+                      (SELECT KID FROM kategorie WHERE Bezeichnung ='".$_POST['suche_kategorie']."');";
+                
             }
             else {
-                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
-                                        // echo $query;
-                 $result = mysqli_query($dbConnect, $query);
-
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;"; 
+                
+                                     
             }
-            
+             $result = mysqli_query($dbConnect, $query);
         ?>
         
         Suchen nach:<br>
@@ -47,7 +53,7 @@
         </form>
          
         <form id="suchfeld_kategorie" action="Home.php" method="POST">
-            Kategorie: <input  type="text" name="suche">
+            Kategorie: <input  type="text" name="suche_kategorie">
             <input type="submit" value="suche">
         </form>
       
