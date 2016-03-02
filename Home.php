@@ -24,9 +24,11 @@
                  $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
-              // echo $query;
+                                        // echo $query;
                  $result = mysqli_query($dbConnect, $query);
+
             }
+            
         ?>
           <form action="Home.php" method="POST">
             Suchen: <input type="text" name="suche">
@@ -89,6 +91,7 @@
                 </tr>
                 <?php
              }
+      
                ?>
         </table>
             
