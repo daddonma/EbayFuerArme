@@ -5,26 +5,24 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <script type="text/javascript">
-    function openPopUP() {
-        fenster = window.open("createAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
-        fenster.focus();
-    }
+  
 </script>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>EBay für Arme - Login</title>
+   </head>
 <link rel="stylesheet" type="text/css" href="CSS/Login.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="Login.js"></script>
-    </head>
-    <div id="flexContainer">
+<script type="text/javascript" src="JavaScript/js_data.js"></script>
+<script type="text/javascript" src="JavaScript/Login.js"></script>
+  
     <header>
-     <img src="Images/Logo.png" alt=""> 
+     <img src="Images/Logo.png" alt="" class="fade-in ,one"> 
     </header>
     <body>
         
-    <div id="InputElements">
+    <div id="InputElements" class="fade-in two">
                 Bitte loggen Sie sich ein: <br><br>
                 <label for="username">Benutzername:</label> <input type="text" id="username"><br>
                 <label for="pw">Passwort:</label> <input type="password" id="pw"> <br><br>
@@ -33,5 +31,4 @@ and open the template in the editor.
                 <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
     </div>
     </body>
-    </div>
 </html>
