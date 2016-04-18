@@ -1,10 +1,15 @@
+
+
 <html>
+    
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+<script type="text/javascript" src="JavaScript/js_data.js"></script>
     <?php
     session_start();
     ?>
     <head>
         <meta charset="UTF-8">
-        <title>EBay für Arme - Login</title>
+        <title>EBay für Arme</title>
         <link rel="stylesheet" type="text/css" href="Style.css" />
     </head>
     <body>
@@ -14,26 +19,43 @@
             $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die (mysql_error());
             echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
             
-            if(!isset($_POST["suche"])) {
+            if(isset($_POST["suche"])) {
                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
-                $result = mysqli_query($dbConnect, $query);
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
+                
+            } else if (isset($_POST['suche_kategorie'])) {
+                
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                      FROM produkte, kategorie, user, auktion
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
+                      (SELECT KID FROM kategorie WHERE Bezeichnung ='".$_POST['suche_kategorie']."');";
+                
             }
             else {
-                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '".$_POST['suche']."';";
-              // echo $query;
-                 $result = mysqli_query($dbConnect, $query);
+                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;"; 
+                
+                                     
             }
+             $result = mysqli_query($dbConnect, $query);
         ?>
-          <form action="Home.php" method="POST">
-            Suchen: <input type="text" name="suche">
+        
+        Suchen nach:<br>
+       
+        Beschreibung: <input type="radio" id="suche_beschreibung">
+        Kategorie: <input type="radio" id="suche_kategorie"><br><br>
+          
+        <form id="suchfeld_beschreibung" action="Home.php" method="POST">
+            Suchen: <input id="" type="text" name="suche">
             <input type="submit" value="suche">
-            
         </form>
          
+        <form id="suchfeld_kategorie" action="Home.php" method="POST">
+            Kategorie: <input  type="text" name="suche_kategorie">
+            <input type="submit" value="suche">
+        </form>
       
         Angebotene Artikel: <br>
         <table>
@@ -89,6 +111,7 @@
                 </tr>
                 <?php
              }
+      
                ?>
         </table>
             

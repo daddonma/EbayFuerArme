@@ -5,6 +5,8 @@
  */
 
 $(document).ready(function(){
+    
+    $('#suchfeld_beschreibung').hide();
 	
 	$('#authFail').hide();
 	
@@ -36,6 +38,12 @@ $(document).ready(function(){
 		 if(e.which == 13){
 			$('#login').click();
 		 }
-	});	
+	});
+        
+          function openPopUP() {
+        fenster = window.open("createAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+        fenster.focus();
+    }
+
 
 });

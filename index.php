@@ -5,19 +5,18 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <script type="text/javascript">
-    function openPopUP() {
-        fenster = window.open("createAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
-        fenster.focus();
-    }
+  
 </script>
 <html>
     <head>
         <meta charset="UTF-8">
         <title>EBay für Arme - Login</title>
+   </head>
 <link rel="stylesheet" type="text/css" href="CSS/Login.css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-<script type="text/javascript" src="Login.js"></script>
-    </head>
+<script type="text/javascript" src="JavaScript/js_data.js"></script>
+<script type="text/javascript" src="JavaScript/Login.js"></script>
+  
     <header>
         <img  src="Images/Logo.png" alt="" class="fade-in ,one" width="25%" height="25%"> 
     </header>
