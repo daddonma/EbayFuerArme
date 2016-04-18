@@ -19,7 +19,7 @@ and open the template in the editor.
 <script type="text/javascript" src="Login.js"></script>
     </head>
     <header>
-     <img src="Images/Logo.png" alt="" class="fade-in ,one"> 
+        <img  src="Images/Logo.png" alt="" class="fade-in ,one" width="25%" height="25%"> 
     </header>
     <body>
         
