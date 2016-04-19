@@ -14,6 +14,8 @@
         <!-- <link rel="stylesheet" type="text/css" href="CSS/Login.css" /> -->
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
+           <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
+
     </head>
     <body>
 
