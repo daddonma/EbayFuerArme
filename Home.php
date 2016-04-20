@@ -49,7 +49,7 @@
               
             }
             else {
-=======
+
                       (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche_kategorie'] . "');";
             } else {
 >>>>>>> 17f035c7490a114904a8814b8bbb48a8baaf2328
