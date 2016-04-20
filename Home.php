@@ -30,7 +30,7 @@
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
                       (SELECT KID FROM kategorie WHERE Bezeichnung ='".$_POST['suche_kategorie']."');";
-                
+              
             }
             else {
                 $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
@@ -51,7 +51,6 @@
             Suchen: <input id="" type="text" name="suche">
             <input type="submit" value="suche">
         </form>
-         
         <form id="suchfeld_kategorie" action="Home.php" method="POST">
             Kategorie: <input  type="text" name="suche_kategorie">
             <input type="submit" value="suche">
@@ -67,7 +66,7 @@
                 <b>Kategorie</b>
             </th>
             <th>
-                <b> Anbieter</b>
+                <b>Anbieter</b>
             </th>
             <th>
                 <b>Aktuelles Gebot</b>
