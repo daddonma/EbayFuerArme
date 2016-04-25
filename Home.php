@@ -16,6 +16,12 @@
         <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
     </head>
     <body>
+        
+         <div class="jumbotron">
+    <h1>Ebay Für Arme</h1> 
+    <p>Alles nur geklaut</p> 
+</div>
+
 
         <?php
         echo "Login erfolgreich als " . $_SESSION['username'] . "<br>";
@@ -46,13 +52,13 @@
         Kategorie: <input type="radio" id="suche_kategorie"><br><br>
 
         <form id="suchfeld_beschreibung" action="Home.php" method="POST">
-            Suchen: <input  type="text" name="suche" class="btn btn-lg btn-primary">
-            <input type="submit" value="suche">
+            Suchen: <input  type="text" name="suche">
+            <input type="submit" value="suche" class="btn btn-primary">
         </form>
 
         <form id="suchfeld_kategorie" action="Home.php" method="POST">
             Kategorie: <input  type="text" name="suche_kategorie">
-            <input type="submit" value="suche" class="btn btn-lg btn-primary">
+            <input type="submit" value="suche" class="btn btn-primary">
         </form>
 
         Angebotene Artikel: <br>
@@ -112,7 +118,7 @@ while ($row = mysqli_fetch_row($result)) {
         </table>
 
         <form action="newProduct.php">
-            <input type="submit" value = "neues Produkt anbieten" class="btn btn-lg btn-primary">
+            <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
             <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
         </form>
 

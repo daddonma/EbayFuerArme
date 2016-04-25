@@ -31,10 +31,10 @@ and open the template in the editor.
                         Bitte loggen Sie sich ein: <br><br>
                         <label for="username">Benutzername:</label> <input type="text" id="username" class="form-control"><br>
                         <label for="pw">Passwort:</label> <input type="password" id="pw" class="form-control"> <br><br>
-                        <input id="login" type="submit" value="LogIn"class="btn btn-primary btn-lg">
+                        <input id="login" type="submit" value="LogIn" class="btn btn-primary">
 
                         </input> 
-                        <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();" class="btn btn-primary btn-lg">
+                        <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();" class="btn btn-primary ">
 
                         </input><br>
                         <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
