@@ -5,7 +5,7 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <script type="text/javascript">
-
+ 
 </script>
 <html>
     <head>
@@ -21,7 +21,7 @@ and open the template in the editor.
 
     </head>
     <body class="background-img">
-        <div class="container-fluid">
+        <div class="container-fluid">neu
             <div class="row"></div>
             <div class="row">
          
@@ -34,8 +34,7 @@ and open the template in the editor.
                         <input id="login" type="submit" value="LogIn"class="btn btn-primary btn-lg">
 
                         </input> 
-                        <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();
-        return false" class="btn btn-primary btn-lg">
+                        <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();" class="btn btn-primary btn-lg">
 
                         </input><br>
                         <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>

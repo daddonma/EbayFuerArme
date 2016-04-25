@@ -36,5 +36,10 @@ $(document).ready(function(){
         }
         
     });
+    
+     function openPopUP() {
+            fenster = window.open("CreateAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+            fenster.focus();
+        }
 
 });
