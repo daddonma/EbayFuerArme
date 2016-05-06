@@ -5,7 +5,10 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <script type="text/javascript">
- 
+    function openPopUP() {
+            fenster = window.open("CreateAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+            fenster.focus();
+        }
 </script>
 <html>
     <head>

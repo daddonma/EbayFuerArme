@@ -8,8 +8,6 @@
     <head>
         <meta charset="UTF-8">
         <title>EBay für Arme</title>
-        <link rel="stylesheet" type="text/css" href="Style.css" />
-
         <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
         <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,38 +26,51 @@
         $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
         echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
 
+        //Falls nach etwas gesucht wird
         if (isset($_POST["suche"])) {
-            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
-                      FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '" . $_POST['suche'] . "';";
-        } else if (isset($_POST['suche_kategorie'])) {
-
-            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
-                      FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
-                      (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche_kategorie'] . "');";
+            switch($_POST["suche_nach"]) {
+                //Suche nach Artikel
+                case "Artikel":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    FROM produkte, kategorie, user, auktion
+                    WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '" . $_POST['suche'] . "';";
+                    break;
+                //Suche nach Kategorie
+                case "Kategorie":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    FROM produkte, kategorie, user, auktion
+                    WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
+                    (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche'] . "');";
+                    break;
+                case "Anbieter":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    FROM produkte, kategorie, user, auktion
+                    WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Anbieter = 
+                    (SELECT uid FROM user WHERE username='" . $_POST['suche'] . "');";
+                    break;
+            }
+        //Falls nach nichts gesucht wird   
         } else {
             $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
         }
-        $result = mysqli_query($dbConnect, $query);
+           $result = mysqli_query($dbConnect, $query);
         ?>
 
-        Suchen nach:<br>
-
-        Beschreibung: <input type="radio" id="suche_beschreibung">
-        Kategorie: <input type="radio" id="suche_kategorie"><br><br>
-
-        <form id="suchfeld_beschreibung" action="Home.php" method="POST">
-            Suchen: <input  type="text" name="suche">
-            <input type="submit" value="suche" class="btn btn-primary">
+        <form action="Home.php" method="POST">
+            Suche: <input id="suche" name="suche" type="text">
+            Suchen nach: 
+            <select name="suche_nach">
+                <option>Artikel</option>
+                <option>Kategorie</option>
+                <option>Anbieter</option>
+            </select>
+            <input type="submit" value="suchen"><br>
+            <a href="Home.php">alles anzeigen</a>
         </form>
-
-        <form id="suchfeld_kategorie" action="Home.php" method="POST">
-            Kategorie: <input  type="text" name="suche_kategorie">
-            <input type="submit" value="suche" class="btn btn-primary">
-        </form>
+        <br>
+       
 
         Angebotene Artikel: <br>
         <table class="table stripped-table table-bordered table-hover table-condensed active">
