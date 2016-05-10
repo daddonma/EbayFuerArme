@@ -15,65 +15,74 @@
     </head>
     <body>
         
-         <div class="jumbotron">
-    <h1>Ebay Für Arme</h1> 
-    <p>Alles nur geklaut</p> 
-</div>
-
-
-        <?php
-        echo "Login erfolgreich als " . $_SESSION['username'] . "<br>";
-        $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
-        echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
-
-        //Falls nach etwas gesucht wird
-        if (isset($_POST["suche"])) {
-            switch($_POST["suche_nach"]) {
-                //Suche nach Artikel
-                case "Artikel":
-                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+      <nav class="navbar navbar-inverse ">
+          <div class="container-fluid">
+              <div class="navbar-header">
+                       <?php
+                        echo "Eingeloggt  als " . $_SESSION['username'] . "<br>";
+                        $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
+                       // echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
+                       ?>
+                </div> 
+                <ul class="nav navbar-nav navbar-right">
+  
+            
+                    <li>
+                        <?php
+                        //Falls nach etwas gesucht wird
+                        if (isset($_POST["suche"])) {
+                            switch ($_POST["suche_nach"]) {
+                                //Suche nach Artikel
+                                case "Artikel":
+                                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '" . $_POST['suche'] . "';";
-                    break;
-                //Suche nach Kategorie
-                case "Kategorie":
-                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                                    break;
+                                //Suche nach Kategorie
+                                case "Kategorie":
+                                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
                     (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche'] . "');";
-                    break;
-                case "Anbieter":
-                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                                    break;
+                                case "Anbieter":
+                                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Anbieter = 
                     (SELECT uid FROM user WHERE username='" . $_POST['suche'] . "');";
-                    break;
-            }
-        //Falls nach nichts gesucht wird   
-        } else {
-            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                                    break;
+                            }
+                            //Falls nach nichts gesucht wird   
+                        } else {
+                            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
-        }
-           $result = mysqli_query($dbConnect, $query);
-        ?>
+                        }
+                        $result = mysqli_query($dbConnect, $query);
+                        ?>
+                    </li>
+                    <li>
+                  
 
-        <form action="Home.php" method="POST">
-            Suche: <input id="suche" name="suche" type="text">
-            Suchen nach: 
-            <select name="suche_nach">
-                <option>Artikel</option>
-                <option>Kategorie</option>
-                <option>Anbieter</option>
-            </select>
-            <input type="submit" value="suchen"><br>
-            <a href="Home.php">alles anzeigen</a>
-        </form>
-        <br>
-       
+                        <form action="Home.php" method="POST">
+                            Suche: <input id="suche" name="suche" type="text">
+                            Suchen nach: 
+                            <select name="suche_nach">
+                                <option>Artikel</option>
+                                <option>Kategorie</option>
+                                <option>Anbieter</option>
+                            </select>
+                            <input type="submit" value="suchen" class="btn btn-primary" ><br>
+                        </form>
+                        <br>
+                    </li>
+                </ul>
+            </div>
+        </nav> 
 
+    <div>
         Angebotene Artikel: <br>
-        <table class="table stripped-table table-bordered table-hover table-condensed active">
+        <table class="table table-striped table-bordered table-hover table-condensed active">
             <th>
                 <b> Bezeichnung </b>
 
@@ -87,20 +96,20 @@
             <th>
                 <b>Aktuelles Gebot</b>
             </th>
-<?php
-while ($row = mysqli_fetch_row($result)) {
-    $produktID = $row[0];
-    $bezeichnung = $row[1];
-    $kategorie = $row[2];
-    $anbieter = $row[3];
-    $gebot = $row[4];
-    //echo $row[1].'<br />';
-    ?>
+            <?php
+            while ($row = mysqli_fetch_row($result)) {
+                $produktID = $row[0];
+                $bezeichnung = $row[1];
+                $kategorie = $row[2];
+                $anbieter = $row[3];
+                $gebot = $row[4];
+                //echo $row[1].'<br />';
+                ?>
                 <tr>
                     <td>
-                <?php
-                echo $bezeichnung;
-                ?>
+                        <?php
+                        echo $bezeichnung;
+                        ?>
                     </td>
                     <td>
                         <?php
@@ -123,16 +132,16 @@ while ($row = mysqli_fetch_row($result)) {
 
                     </td>
                 </tr>
-    <?php
-}
-?>
+                <?php
+            }
+            ?>
         </table>
 
         <form action="newProduct.php">
             <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
             <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
         </form>
-
+    </div>
 
     </body>
 </html>
