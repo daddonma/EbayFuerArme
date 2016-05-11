@@ -8,23 +8,12 @@
 
 }
 
-
-
-
-.vcenter {
-    display: flex;
-    align-items: top;
-
-}
 .background-img{
     background-color:rgba(255, 221, 132,1);
-
-    background-image: url("background_.jpg");
+    background-image: url("Images/background_.jpg");
     background-repeat: no-repeat;
     background-size:cover;
 }
-
-
 
 .nav{
     color:white;

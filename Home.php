@@ -14,11 +14,6 @@
         <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
     </head>
     <body>
-
-
-
-
-
         <nav class="navbar navbar-inverse ">
             <div class="container-fluid">
                 <div class="row">
@@ -27,7 +22,6 @@
                             <a class="navbar-brand" href="home.php">PayBay</a>   
                         </div>
                     </div>
-
                     <div class="col-sm-3">
                         <ul class="nav navbar-nav">
                             <li>
@@ -37,15 +31,12 @@
                                 // echo "Herzlich Willkommen bei Ebay für arme.<br><br>";
                                 ?>
                             </li>
+                        </ul>
                     </div>
-
-                    </ul>>
                 </div>
+            </div>
         </nav> 
-
         <div class="row">
-
-
             <?php
             //Falls nach etwas gesucht wird
             if (isset($_POST["suche"])) {
@@ -78,17 +69,14 @@
             }
             $result = mysqli_query($dbConnect, $query);
             ?>
-
             <form action="Home.php" method="POST" >
                 <div class="row">
                     <div class="col-sm-6">
                         <label for="suche"> Suche:</label>
                         <input id="suche" name="suche" type="text" class=" form-control">
                     </div>
-
                     <div class="col-sm-6">
                         <label for="suche_nach"> Kategorie:</label>
-
                         <select name="suche_nach" class="form-control">
                             <option>Artikel</option>
                             <option>Kategorie</option>
@@ -102,16 +90,12 @@
                     </div>
                 </div>
             </form>           
-
         </div>
-
-
         <div>
             Angebotene Artikel: <br>
             <table class="table table-striped table-bordered table-hover table-condensed active">
                 <th>
                     <b> Bezeichnung </b>
-
                 </th>
                 <th>
                     <b>Kategorie</b>
@@ -155,19 +139,16 @@
                         <td>
                           <!--  <input type="button" value="Produkt ansehen"></input> -->
                             <a href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
-
                         </td>
                     </tr>
                     <?php
                 }
                 ?>
             </table>
-
             <form action="newProduct.php">
                 <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
                 <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
             </form>
         </div>
-
     </body>
 </html>
