@@ -5,20 +5,29 @@
 
 .jumbotron{
     padding:0;
-  
+
+}
+
+
+
+
+.vcenter {
+    display: flex;
+    align-items: top;
+
 }
 .background-img{
     background-color:rgba(255, 221, 132,1);
 
-       background-image: url("background_.jpg");
-           background-repeat: no-repeat;
-           background-size:cover;
+    background-image: url("background_.jpg");
+    background-repeat: no-repeat;
+    background-size:cover;
 }
 
 
 
 .nav{
-color:white;
+    color:white;
     padding:5px;
 }
 
@@ -27,62 +36,88 @@ color:white;
 }
 
 .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
-  background-color:rgba(255, 0, 0, 0.4);
+    background-color:rgba(255, 0, 0, 0.4);
 
 }
 label{
     margin:0px;
 }
-.btn{
-	
-	color: #ffffff;
-	padding: 5px 10px;
-                    margin-bottom:5px;
-                    margin-top:5px;
-	background: -moz-linear-gradient(
-		top,
-		#ff2819 0%,
-		#ab0000);
-	background: -webkit-gradient(
-		linear, left top, left bottom,
-		from(#ff2819),
-		to(#ab0000));
-	-moz-border-radius: 0px;
-	-webkit-border-radius: 0px;
-	border-radius: 0px;
-	border: 1px solid #7d0000;
-	-moz-box-shadow:
-		0px 1px 3px rgba(000,000,000,0),
-		inset 0px 0px 2px rgba(255,255,255,0);
-	-webkit-box-shadow:
-		0px 1px 3px rgba(000,000,000,0),
-		inset 0px 0px 2px rgba(255,255,255,0);
-	box-shadow:
-		0px 1px 3px rgba(000,000,000,0),
-		inset 0px 0px 2px rgba(255,255,255,0);
-	
+.btn-primary{
+
+    color: #ffffff;
+    padding: 5px 10px;
+    margin-bottom:5px;
+    margin-top:5px;
+    background: -moz-linear-gradient(
+        top,
+        #ff2819 0%,
+        #ab0000);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ff2819),
+        to(#ab0000));
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #7d0000;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);
+
 }
 
+.btn-primary:hover {
+    color: #ffffff;
+    padding: 5px 10px;
+    margin-bottom:5px;
+    margin-top:5px;
+    background: -moz-linear-gradient(
+        top,
+        #ff2819 0%,
+        #000);
+    background: -webkit-gradient(
+        linear, left top, left bottom,
+        from(#ff2819),
+        to(#000));
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;
+    border: 1px solid #7d0000;
+    -moz-box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);
+    -webkit-box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);
+    box-shadow:
+        0px 1px 3px rgba(000,000,000,0),
+        inset 0px 0px 2px rgba(255,255,255,0);}
 
 
 .whiteBox{
-    
+
     background-color:rgba(255, 255, 255, 0.6);
-padding:30px;
+    padding:30px;
 }
 
 vertical-center {
-  min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
-  min-height: 100vh; /* These two lines are counted as one :-)       */
+    min-height: 100%;  /* Fallback for browsers do NOT support vh unit */
+    min-height: 100vh; /* These two lines are counted as one :-)       */
 
-  display: flex;
-  align-items: center;
+    display: flex;
+    align-items: center;
 }
 
 .table-striped>tbody>tr:nth-child(odd)>th {
 
- }
- .table-striped>tbody>tr:nth-child(odd)>td{
+}
+.table-striped>tbody>tr:nth-child(odd)>td{
 
- }
- 
+}
+

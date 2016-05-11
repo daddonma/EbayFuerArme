@@ -11,13 +11,9 @@
             <nav class="navbar navbar-inverse">
                 <div class="container-fluid">
                     <div class="navbar-header">
-                        <a class="navbar-brand" href="#">WebSiteName</a>
+                        <a class="navbar-brand" href="home.php">PayBay</a>
                     </div>
                     <ul class="nav navbar-nav">
-                        <li class="active"><a href="#">Home</a></li>
-                        <li><a href="#">Page 1</a></li>
-                        <li><a href="#">Page 2</a></li> 
-                        <li><a href="#">Page 3</a></li> 
                     </ul>
                 </div>
 
@@ -103,7 +99,7 @@
 
                 <div class="row">
                     <input name="Artikel" type="hidden" value="<?php echo $artikelnr ?>">
-                    <input type="submit" value="Gebot abgeben" class="btn btn-primary btn-block">
+                    <input type="submit" value="Gebot abgeben" class="btn btn-primary btn-block btn-hover btn-active">
                 </div>
                 <div class="row">
                     <input type="submit" value="Sofort kaufen" class="btn btn-primary btn-block">

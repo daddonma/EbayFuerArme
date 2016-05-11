@@ -6,9 +6,9 @@ and open the template in the editor.
 -->
 <script type="text/javascript">
     function openPopUP() {
-            fenster = window.open("CreateAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
-            fenster.focus();
-        }
+        fenster = window.open("CreateAccount.php", "neu anmelden", "width=600,height=400,status=yes,scrollbars=yes,resizable=yes");
+        fenster.focus();
+    }
 </script>
 <html>
     <head>
@@ -25,30 +25,28 @@ and open the template in the editor.
     </head>
     <body class="background-img">
         <div class="container-fluid">neu
-            <div class="row"></div>
+
             <div class="row">
-         
+
                 <div class="col-sm-4">
-<div class="whiteBox">
-                    <div id="InputElements" class="fade-in two">
-                        Bitte loggen Sie sich ein: <br><br>
-                        <label for="username">Benutzername:</label> <input type="text" id="username" class="form-control"><br>
-                        <label for="pw">Passwort:</label> <input type="password" id="pw" class="form-control"> <br><br>
-                        <input id="login" type="submit" value="LogIn" class="btn btn-primary">
+                    <div class="whiteBox">
+                        <div id="InputElements" class="fade-in two">
+                            Bitte loggen Sie sich ein: <br><br>
+                            <label for="username">Benutzername:</label> <input type="text" id="username" class="form-control"><br>
+                            <label for="pw">Passwort:</label> <input type="password" id="pw" class="form-control"> <br><br>
+                            <input id="login" type="submit" value="LogIn" class="btn btn-primary btn-hover btn-active">
 
-                        </input> 
-                        <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();" class="btn btn-primary ">
+                            </input> 
+                            <input id="anmelden" type="button" value="Neu anmelden" onclick="openPopUP();" class="btn btn-primary btn-hover btn-active">
 
-                        </input><br>
-                        <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
+                            </input><br>
+                            <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
 
+                        </div>
                     </div>
-</div>
                 </div>
-                <div class="col-sm-4">
-                </div>
+
             </div>
         </div>
-    </div>
-</body>
+    </body>
 </html>
