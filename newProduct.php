@@ -14,7 +14,7 @@
                         <a class="navbar-brand" href="home.php">PayBay</a>
                     </div>
                     <ul class="nav navbar-nav">
-                   
+
                     </ul>
                 </div>
 
@@ -33,8 +33,10 @@
                 <div class="row">
                     <div class="col-sm-1">
                         <label for="bezeichnung">Artikelbezeichnung: </label> </div>
-                    <div class="col-sm-11">   
-                        <input type="text" name="bezeichnung" value="" class="form-control"><br></div>
+                    <div class="col-sm-8">   
+                        <input type="text" name="bezeichnung" value="" class="form-control">
+                    </div>
+
                 </div>
                 <div class="row">
                     <div class="col-sm-1">
@@ -60,9 +62,11 @@
                         <label for="beschreibung">Artikelbeschreibung:</label> 
                     </div>
                     <div class="col-sm-11">
-                      <textarea rows="10"  class="form-control" name="beschreibung">
+                        <textarea rows="10"  class="form-control" name="beschreibung">
                         </textarea>
                     </div>
+                  
+
                 </div>
 
                 <div class="row">
@@ -73,6 +77,23 @@
                         <input type="text" name="startpreis" value="" class="form-control"><br>
                     </div>
                 </div>
+                
+                <div class="row">
+                <div class="col-sm-12">
+                    <h1>Bild hochladen</h1>
+
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
+
+                          enctype="multipart/form-data">
+
+                        Bilddatei:<br />
+
+                        <input type="file" name="img" ><p>
+
+                    </form>
+                </div>
+            </div>
+                
                 <div class="row">
                     <div class="col-sm-2">
                         <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
@@ -80,10 +101,11 @@
                 </div>
                 <div class="row">
                     <div class="col-sm-2">
-                                    <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
+                        <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
                     </div>
                 </div>
             </form>
+            
             <?php
             if (isset($_POST['kategorie'])) {
                 $bezeichnung = $_POST['bezeichnung'];
@@ -94,7 +116,7 @@
                 $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
                         . "('" . $bezeichnung . "', " . $kategorie . ", " . $_SESSION['uid'] . ", '" . $beschreibung . "', " . $starpreis . ");";
 
-echo $insert;
+                echo $insert;
                 //echo $insert;
                 if ($dbConnect->query($insert) === TRUE) {
                     echo "Auktion erfolgreich gestartet";
@@ -102,8 +124,36 @@ echo $insert;
                     echo "Error";
                 }
             }
+
+
+            if (array_key_exists('img', $_FILES)) {
+
+                $tmpname = $_FILES['img']['tmp_name'];
+
+                $type = $_FILES['img']['type'];
+
+                $hndFile = fopen($tmpname, "r");
+
+                $data = addslashes(fread($hndFile, filesize($tmpname)));
+
+                $strQuery = "INSERT INTO images
+
+(imgdata,imgtype) VALUES
+
+('$data','$type')";
+
+                if ($dbConnect->query($strQuery) === TRUE) {
+                    echo "Auktion erfolgreich gestartet";
+                } else {
+                    echo "Error";
+                }
+            }
             ?>
         </div>
+
+
+
+
     </body>
 </html>
 

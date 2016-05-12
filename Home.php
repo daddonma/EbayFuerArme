@@ -14,6 +14,8 @@
         <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
     </head>
     <body>
+
+
         <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="row">
@@ -36,76 +38,64 @@
                 </div>
             </div>
         </nav> 
-        <div class="row">
-            <?php
-            //Falls nach etwas gesucht wird
-            if (isset($_POST["suche"])) {
-                switch ($_POST["suche_nach"]) {
-                    //Suche nach Artikel
-                    case "Artikel":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+
+        <div class="container-fluid">
+            <div class="row">
+
+        <?php
+        //Falls nach etwas gesucht wird
+        if (isset($_POST["suche"])) {
+            switch ($_POST["suche_nach"]) {
+                //Suche nach Artikel
+                case "Artikel":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '" . $_POST['suche'] . "';";
-                        break;
-                    //Suche nach Kategorie
-                    case "Kategorie":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    break;
+                //Suche nach Kategorie
+                case "Kategorie":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
                     (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche'] . "');";
-                        break;
-                    case "Anbieter":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    break;
+                case "Anbieter":
+                    $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Anbieter = 
                     (SELECT uid FROM user WHERE username='" . $_POST['suche'] . "');";
-                        break;
-                }
-                //Falls nach nichts gesucht wird   
-            } else {
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                    break;
+            }
+            //Falls nach nichts gesucht wird   
+        } else {
+            $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
-            }
-            $result = mysqli_query($dbConnect, $query);
-            ?>
-            <form action="Home.php" method="POST" >
-                <div class="row">
-                    <div class="col-sm-6">
-                        <label for="suche"> Suche:</label>
-                        <input id="suche" name="suche" type="text" class=" form-control">
-                    </div>
-                    <div class="col-sm-6">
-                        <label for="suche_nach"> Suche nach:</label>
-                        <select name="suche_nach" class="form-control">
-                            <option>Artikel</option>
-                            <option>Kategorie</option>
-                            <option>Anbieter</option>
-                        </select>
-                    </div>
+        }
+        $result = mysqli_query($dbConnect, $query);
+        ?>
+        <form action="Home.php" method="POST" >
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="suche"> Suche:</label>
+                    <input id="suche" name="suche" type="text" class=" form-control">
                 </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <input type="submit" value="suchen" class="btn btn-primary btn-block" >
-                    </div>
+                <div class="col-sm-6">
+                    <label for="suche_nach"> Suche nach:</label>
+                    <select name="suche_nach" class="form-control">
+                        <option>Artikel</option>
+                        <option>Kategorie</option>
+                        <option>Anbieter</option>
+                    </select>
                 </div>
-            </form>           
-        </div>
-        <div>
-            Angebotene Artikel: <br>
-            <table class="table table-striped table-bordered table-hover table-condensed active">
-                <th>
-                    <b> Bezeichnung </b>
-                </th>
-                <th>
-                    <b>Kategorie</b>
-                </th>
-                <th>
-                    <b> Anbieter</b>
-                </th>
-                <th>
-                    <b>Aktuelles Gebot</b>
-                </th>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <input type="submit" value="suchen" class="btn btn-primary btn-block" >
+                </div>
+            </div>
+        </form>
+            
                 <?php
                 while ($row = mysqli_fetch_row($result)) {
                     $produktID = $row[0];
@@ -115,40 +105,39 @@
                     $gebot = $row[4];
                     //echo $row[1].'<br />';
                     ?>
-                    <tr>
-                        <td>
-                            <?php
-                            echo $bezeichnung;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $kategorie;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $anbieter;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $gebot;
-                            ?>
-                        </td>
-                        <td>
-                          <!--  <input type="button" value="Produkt ansehen"></input> -->
-                            <a class="btn btn-primary" href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </table>
-            <form action="newProduct.php">
-                <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
-                <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
-            </form>
-        </div>
-    </body>
+
+
+                    <div class="col-sm-2">
+                        <div class="panel panel-primary">
+                            <div class="panel-body"><img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
+                            <div class="panel-footer">
+                                <div class="row">
+                                    <h4 class="text-right"><?php echo $bezeichnung ?></h4>
+                                </div>
+                                <div class="row">
+                                    <h4 class="text-right"><?php echo ($gebot . ' €') ?></h4>
+                                </div>
+                                <div class="row">
+                                <a class="btn btn-primary btn-block" href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
+                                </div>
+                                </div>
+                        </div>
+
+                    </div>
+            
+                <!--  <input type="button" value="Produkt ansehen"></input> -->
+
+            <?php
+        }
+        ?>
+                    </div> 
+            </div>
+        
+        <form action="newProduct.php">
+            <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
+            <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
+        </form>
+    </div>
+
+</body>
 </html>
