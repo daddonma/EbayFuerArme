@@ -14,7 +14,7 @@
         <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
     </head>
     <body>
-        <nav class="navbar navbar-inverse ">
+        <nav class="navbar navbar-inverse">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-sm-1">
@@ -76,7 +76,7 @@
                         <input id="suche" name="suche" type="text" class=" form-control">
                     </div>
                     <div class="col-sm-6">
-                        <label for="suche_nach"> Kategorie:</label>
+                        <label for="suche_nach"> Suche nach:</label>
                         <select name="suche_nach" class="form-control">
                             <option>Artikel</option>
                             <option>Kategorie</option>
@@ -138,7 +138,7 @@
                         </td>
                         <td>
                           <!--  <input type="button" value="Produkt ansehen"></input> -->
-                            <a href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
+                            <a class="btn btn-primary" href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
                         </td>
                     </tr>
                     <?php

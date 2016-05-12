@@ -33,12 +33,13 @@
                 <div class="row">
                     <div class="col-sm-1">
                         <label for="bezeichnung">Artikelbezeichnung: </label> </div>
-                    <div class="col-sm-11">   <input type="text" name="bezeichnung" value="" class="form-control"><br></div>
+                    <div class="col-sm-11">   
+                        <input type="text" name="bezeichnung" value="" class="form-control"><br></div>
                 </div>
                 <div class="row">
                     <div class="col-sm-1">
                         <label for="kategorie">
-                            Kategorie
+                            Kategorie:
                         </label></div>
                     <div class="col-sm-11">
                         <select name="kategorie" class="form-control"> 
@@ -59,7 +60,7 @@
                         <label for="beschreibung">Artikelbeschreibung:</label> 
                     </div>
                     <div class="col-sm-11">
-                        <textarea rows="10"  class="form-control" name="beschreibung">
+                      <textarea rows="10"  class="form-control" name="beschreibung">
                         </textarea>
                     </div>
                 </div>
@@ -73,12 +74,16 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-sm-12">
-                        <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-hover btn-active">
+                    <div class="col-sm-2">
+                        <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-2">
+                                    <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
                     </div>
                 </div>
             </form>
-            <a href="Home.php">Zurück</a>
             <?php
             if (isset($_POST['kategorie'])) {
                 $bezeichnung = $_POST['bezeichnung'];
@@ -89,7 +94,7 @@
                 $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
                         . "('" . $bezeichnung . "', " . $kategorie . ", " . $_SESSION['uid'] . ", '" . $beschreibung . "', " . $starpreis . ");";
 
-
+echo $insert;
                 //echo $insert;
                 if ($dbConnect->query($insert) === TRUE) {
                     echo "Auktion erfolgreich gestartet";
