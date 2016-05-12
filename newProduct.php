@@ -73,6 +73,15 @@
                         <input type="text" name="startpreis" value="" class="form-control"><br>
                     </div>
                 </div>
+                
+                <div class="row">
+                    <div class="col-sm-1">
+                        <label for="Angebotsende">Angebotsende</label> 
+                    </div>
+                    <div class="col-sm-11">
+                        <input type="date" name="ende" value="" class="form-control"><br>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-2">
                         <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
@@ -90,16 +99,22 @@
                 $kategorie = $_POST['kategorie'];
                 $beschreibung = $_POST['beschreibung'];
                 $starpreis = $_POST['startpreis'];
+                $angebotsende = $_POST['ende'];
 
                 $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
-                        . "('" . $bezeichnung . "', " . $kategorie . ", " . $_SESSION['uid'] . ", '" . $beschreibung . "', " . $starpreis . ");";
+                        . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
 
-echo $insert;
                 //echo $insert;
                 if ($dbConnect->query($insert) === TRUE) {
-                    echo "Auktion erfolgreich gestartet";
+                    $update_auktion_date = "UPDATE AUKTION SET Auktion_Ende = '".$angebotsende ."' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='".trim($bezeichnung)."' AND text='".trim($beschreibung)."');";
+                    if($dbConnect->query($update_auktion_date) === TRUE) {
+                         echo "Auktion erfolgreich gestartet";
+                    }   else {
+                        echo "Fehler beim Eintragen des Angebotsendes";
+                    }
+   
                 } else {
-                    echo "Error";
+                    echo "Fehler beim Speichern des Produktes";
                 }
             }
             ?>

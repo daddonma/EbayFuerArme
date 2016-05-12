@@ -54,7 +54,7 @@
                 }
 
 
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, produkte.Text 
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, produkte.Text, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit' 
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.PID = " . $artikelnr . ";";
 
@@ -69,7 +69,12 @@
                 $anbieter = $row[3];
                 $gebot = $row[4];
                 $beschreibung = $row[5];
+                $restzeit = $row[6];
             }
+            
+          
+                
+            
             ?>
             <!-- die Form noch richtig schieben -->
             <form action="showProduct.php" method="GET">
@@ -78,6 +83,13 @@
                     <label>Kategorie: </label> <?php echo $kategorie; ?><br>
                     <label>Anbieter: </label> <?php echo $anbieter; ?><br>
                 </div>
+                <?php
+                  if($restzeit <0) {
+                echo "<b><font color=red>Die Auktion wurde für ". $gebot ." Euro erfolgreich beendet. Sie können nicht mehr bieten.</b></font>";
+                  
+            }else {
+                
+            ?>
                 <div class="col-sm-4">
                     <div class="row">
                         <label>EUR: </label> 
@@ -97,6 +109,9 @@
                         <input type="submit" value="Sofort kaufen" class="btn btn-primary btn-block">
                     </div>
                 </div>
+                <?php
+            }
+                ?>
         </div>
         <div class="row">
             <div class="col-sm-12">

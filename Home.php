@@ -43,19 +43,19 @@
                 switch ($_POST["suche_nach"]) {
                     //Suche nach Artikel
                     case "Artikel":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Bezeichnung = '" . $_POST['suche'] . "';";
                         break;
                     //Suche nach Kategorie
                     case "Kategorie":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.KategorieID=
                     (SELECT KID FROM kategorie WHERE Bezeichnung ='" . $_POST['suche'] . "');";
                         break;
                     case "Anbieter":
-                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                        $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.Anbieter = 
                     (SELECT uid FROM user WHERE username='" . $_POST['suche'] . "');";
@@ -63,7 +63,7 @@
                 }
                 //Falls nach nichts gesucht wird   
             } else {
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
                       FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
             }
@@ -106,6 +106,9 @@
                 <th>
                     <b>Aktuelles Gebot</b>
                 </th>
+                <th>
+                    <b>Restzeit (Tage)</b>
+                </th>
                 <?php
                 while ($row = mysqli_fetch_row($result)) {
                     $produktID = $row[0];
@@ -113,6 +116,7 @@
                     $kategorie = $row[2];
                     $anbieter = $row[3];
                     $gebot = $row[4];
+                    $restzeit = $row[5];
                     //echo $row[1].'<br />';
                     ?>
                     <tr>
@@ -134,6 +138,15 @@
                         <td>
                             <?php
                             echo $gebot;
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            if($restzeit >0) {
+                                echo $restzeit;
+                            } else {
+                                echo "<b><font color=red>abgelaufen</font></b>";
+                            }
                             ?>
                         </td>
                         <td>
