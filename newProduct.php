@@ -88,56 +88,56 @@
                         <input type="date" name="ende" value="" class="form-control"><br>
                     </div>
                 </div>
-                
-                   <?php
-                        if (isset($_POST['kategorie'])) {
-                            $bezeichnung = $_POST['bezeichnung'];
-                            $kategorie = $_POST['kategorie'];
-                            $beschreibung = $_POST['beschreibung'];
-                            $starpreis = $_POST['startpreis'];
-                            $angebotsende = $_POST['ende'];
 
-                            $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
-                                    . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
+                <?php
+                if (isset($_POST['kategorie'])) {
+                    $bezeichnung = $_POST['bezeichnung'];
+                    $kategorie = $_POST['kategorie'];
+                    $beschreibung = $_POST['beschreibung'];
+                    $starpreis = $_POST['startpreis'];
+                    $angebotsende = $_POST['ende'];
 
-
-                            echo $insert;
+                    $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
+                            . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
 
 
-                            if ($dbConnect->query($insert) === TRUE) {
-                                $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
-                                if ($dbConnect->query($update_auktion_date) === TRUE) {
-                                    echo "Auktion erfolgreich gestartet";
-                                } else {
-                                    echo "Fehler beim Eintragen des Angebotsendes";
-                                }
-                            } else {
-                                echo "Fehler beim Speichern des Produktes";
-                            }
+                    echo $insert;
 
 
-                            if (array_key_exists('img', $_FILES)) {
-
-                                $tmpname = $_FILES['img']['tmp_name'];
-
-                                $type = $_FILES['img']['type'];
-
-                                $hndFile = fopen($tmpname, "r");
-
-                                $data = addslashes(fread($hndFile, filesize($tmpname)));
-
-                                $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
-
-                                if ($dbConnect->query($strQuery) === TRUE) {
-                                    echo "Auktion erfolgreich gestartet";
-                                } else {
-                                    echo "Error";
-                                }
-                            } else {
-                                echo "Fehler beim Speichern des Produktes";
-                            }
+                    if ($dbConnect->query($insert) === TRUE) {
+                        $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
+                        if ($dbConnect->query($update_auktion_date) === TRUE) {
+                            echo "Auktion erfolgreich gestartet";
+                        } else {
+                            echo "Fehler beim Eintragen des Angebotsendes";
                         }
-                        ?>
+                    } else {
+                        echo "Fehler beim Speichern des Produktes";
+                    }
+
+// hier ist der Bildupload
+                    if (array_key_exists('img', $_FILES)) {
+
+                        $tmpname = $_FILES['img']['tmp_name'];
+
+                        $type = $_FILES['img']['type'];
+
+                        $hndFile = fopen($tmpname, "r");
+
+                        $data = addslashes(fread($hndFile, filesize($tmpname)));
+
+                        $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
+
+                        if ($dbConnect->query($strQuery) === TRUE) {
+                            echo "Auktion erfolgreich gestartet";
+                        } else {
+                            echo "Error";
+                        }
+                    } else {
+                        echo "Fehler beim Speichern des Produktes";
+                    }
+                }
+                ?>
 
 
                 <div class="col-sm-12">
@@ -163,7 +163,7 @@
 
 
 
-                     
+
                     </form>
 
                 </div>

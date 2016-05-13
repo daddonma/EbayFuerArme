@@ -67,9 +67,8 @@
                 }
                 //Falls nach nichts gesucht wird   
             } else {
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
-                    FROM produkte, kategorie, user, auktion";
-                
+          
+                //Dieser Query muss überprüft werden
                     $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
                     FROM produkte, kategorie, user, auktion
                     WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt
