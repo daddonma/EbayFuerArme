@@ -17,6 +17,7 @@
             </nav>
             <div class="col-sm-4">
                 <img src="CSS/Images/platzhalter.svg" class="img-thumbnail">
+                <img src='img_get.php?id=0'>
             </div>
             <?php
             /*
