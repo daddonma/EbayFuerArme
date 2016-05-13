@@ -15,36 +15,14 @@
                     </ul>
                 </div>
             </nav>
-            <div class="col-sm-4">
-                <img src="CSS/Images/platzhalter.svg" class="img-thumbnail">
-                <img src='img_get.php?id=0'>
-            </div>
-            
-            <?php
 
-
-
-$id = intval($_GET['id']);
-
-$strQuery= "select imgdata,imgtype
-
-from images where id=$id";
-
-$result=mysql_query($strQuery);
-
-$row=mysql_fetch_assoc($result);
-
-header("Content-type: {$row['imgtype']}");
-
-echo $row['imgdata'];
-
-?>
             <?php
             /*
              * To change this license header, choose License Headers in Project Properties.
              * To change this template file, choose Tools | Templates
              * and open the template in the editor.
              */
+            session_start();
             $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
             if (!isset($_GET["Artikel"])) {
 
@@ -64,22 +42,26 @@ echo $row['imgdata'];
 
                     //Überprüfen ob Eingabe höher ist ales aktuelles Gebot 
                     if ($gebot > $hoechstes_gebot) {
-                        $update = "UPDATE auktion SET aktuelles_gebot=" . $gebot . " WHERE Produkt=" . $artikelnr . ";";
-                        //echo $update;
-                        if ($dbConnect->query($update) === TRUE) {
-                            echo "Gebot erfolgreich abgegeben";
-                        }
+                        $update_gebot = utf8_decode("UPDATE auktion SET aktuelles_gebot=" . $gebot . ", Höchstbietender = " . $_SESSION['uid'] . " WHERE Produkt=" . $artikelnr . ";");
+                       $update_auktion = mysqli_query($dbConnect, $update_gebot) or die(mysqli_error($dbConnect));
+                       
+                       if($update_auktion === TRUE) {
+                           echo "Gebot erfolgreich abgegeben";
+                       }
+                        //echo $update_gebot;
+                        
+                        
                     } else {
                         echo "Gebot zu niedrig";
                     }
                 }
 
 
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, produkte.Text, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit' 
-                      FROM produkte, kategorie, user, auktion
-                      WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.PID = " . $artikelnr . ";";
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, produkte.Text, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit', images.datei 
+                      FROM produkte, kategorie, user, auktion, images
+                      WHERE produkte.ImageID = images.ImageID AND produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt AND produkte.PID = " . $artikelnr . ";";
 
-                //  echo $query;
+                //echo $query;
                 $result = mysqli_query($dbConnect, $query);
                 $row = mysqli_fetch_row($result);
 
@@ -91,6 +73,7 @@ echo $row['imgdata'];
                 $gebot = $row[4];
                 $beschreibung = $row[5];
                 $restzeit = $row[6];
+                $image = $row[7];
             }
             
           
@@ -98,6 +81,9 @@ echo $row['imgdata'];
             
             ?>
             <!-- die Form noch richtig schieben -->
+             <div class="col-sm-4">
+                <?php echo '<img src="data:image/jpeg;base64,'.base64_encode($image) .'" class="img-thumbnail">';?>
+            </div>
             <form action="showProduct.php" method="GET">
                 <div class="col-sm-4">
                     <h1><?php echo $bezeichnung; ?></h1>

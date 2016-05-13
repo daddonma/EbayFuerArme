@@ -30,7 +30,7 @@
         <div class="container-fluid">
 
 
-            <form action ="newProduct.php" method="POST">
+            <form action ="newProduct.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-1">
                         <label for="bezeichnung">Artikelbezeichnung: </label> </div>
@@ -88,59 +88,18 @@
                         <input type="date" name="ende" value="" class="form-control"><br>
                     </div>
                 </div>
+                
+                 <div class="row">
 
-                <?php
-                if (isset($_POST['kategorie'])) {
-                    $bezeichnung = $_POST['bezeichnung'];
-                    $kategorie = $_POST['kategorie'];
-                    $beschreibung = $_POST['beschreibung'];
-                    $starpreis = $_POST['startpreis'];
-                    $angebotsende = $_POST['ende'];
-
-                    $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
-                            . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
-
-
-                    echo $insert;
-
-
-                    if ($dbConnect->query($insert) === TRUE) {
-                        $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
-                        if ($dbConnect->query($update_auktion_date) === TRUE) {
-                            echo "Auktion erfolgreich gestartet";
-                        } else {
-                            echo "Fehler beim Eintragen des Angebotsendes";
-                        }
-                    } else {
-                        echo "Fehler beim Speichern des Produktes";
-                    }
-
-// hier ist der Bildupload
-                    if (array_key_exists('img', $_FILES)) {
-
-                        $tmpname = $_FILES['img']['tmp_name'];
-
-                        $type = $_FILES['img']['type'];
-
-                        $hndFile = fopen($tmpname, "r");
-
-                        $data = addslashes(fread($hndFile, filesize($tmpname)));
-
-                        $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
-
-                        if ($dbConnect->query($strQuery) === TRUE) {
-                            echo "Auktion erfolgreich gestartet";
-                        } else {
-                            echo "Error";
-                        }
-                    } else {
-                        echo "Fehler beim Speichern des Produktes";
-                    }
-                }
-                ?>
-
-
-                <div class="col-sm-12">
+                    <div class="col-sm-1">
+                        <label for="img">Bild Hochladen</label> 
+                    </div>
+                    <div class="col-sm-11">
+                        <input type="file" name="image" value="" class="form-control"><br>
+                    </div>
+                </div>
+                
+                <!--<div class="col-sm-12">
                     <h1>Bild hochladen</h1>
 
                     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
@@ -149,7 +108,7 @@
 
                         <input type="file" name="img" ><p>
 
-                            </div>
+                            </div>-->
                         <div class="row">
                             <div class="col-sm-2">
                                 <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
@@ -159,7 +118,7 @@
                             <div class="col-sm-2">
                                 <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
                             </div>
-                        </div>
+                        </div
 
 
 
@@ -167,6 +126,63 @@
                     </form>
 
                 </div>
+
+                <?php
+                if (isset($_POST['kategorie'])) {
+                    $bezeichnung = $_POST['bezeichnung'];
+                    $kategorie = $_POST['kategorie'];
+                    $beschreibung = $_POST['beschreibung'];
+                    $starpreis = $_POST['startpreis'];
+                    $angebotsende = $_POST['ende'];
+                    
+
+                    $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
+                            . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
+
+
+                    //echo $insert;
+
+
+                    if ($dbConnect->query($insert) === TRUE) {
+                        $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
+                        if ($dbConnect->query($update_auktion_date) === TRUE) {
+                            
+                            $query_max_image = "SELECT max(imageID) AS 'maxImage' FROM images;";
+                            $max_image = mysqli_fetch_row(mysqli_query($dbConnect, $query_max_image))[0];
+                            $image_id = $max_image+1;
+                            
+                            $image = addslashes(file_get_contents($_FILES['image']['tmp_name'])); 
+                            $image_name = addslashes($_FILES['image']['name']);
+                            $img_query = "INSERT INTO `images` (`ImageID`, `datei`, `name`) VALUES (".$image_id.", '{$image}', '{$image_name}')";
+                            echo "Auktion erfolgreich gestartet";
+                           //echo $img_query;
+                            
+                            
+                            if (mysqli_query($dbConnect, $img_query)) { // Error handling
+                                    $query_produktID = "SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "';";
+                                    $produktID = mysqli_fetch_row(mysqli_query($dbConnect, $query_produktID))[0];
+                                    
+                                    $update_img_query = "UPDATE produkte SET ImageID = ".$image_id." WHERE PID = ".$produktID.";";
+                               
+                                     if ($dbConnect->query($update_img_query) === TRUE) {
+                                         echo "";
+                                     } else {
+                                         echo "Fehler beim Hochladen des Bildes";
+                                     }
+                                    } 
+                        } else {
+                            echo "Fehler beim Eintragen des Angebotsendes";
+                        }
+                    } else {
+                        echo "Fehler beim Speichern des Produktes";
+                    }
+
+
+                }
+                ?>
+
+
+               
 
 
 
