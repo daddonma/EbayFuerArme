@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Erstellungszeit: 12. Mai 2016 um 18:00
+-- Erstellungszeit: 13. Mai 2016 um 12:59
 -- Server-Version: 5.6.26
 -- PHP-Version: 5.6.12
 
@@ -32,17 +32,19 @@ CREATE TABLE IF NOT EXISTS `auktion` (
   `Höchstbietender` int(11) DEFAULT NULL,
   `aktuelles_gebot` double DEFAULT NULL,
   `Auktion_ende` date DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
 
 --
--- Daten für Tabelle `auktion`
+-- Tabellenstruktur für Tabelle `images`
 --
 
-INSERT INTO `auktion` (`AuktionID`, `Produkt`, `Höchstbietender`, `aktuelles_gebot`, `Auktion_ende`) VALUES
-(1, 1, NULL, 35, '2016-05-19'),
-(2, 2, NULL, 7500, '2016-05-26'),
-(3, 3, NULL, 1, '2016-05-13'),
-(4, 4, NULL, 1, '2016-05-11');
+CREATE TABLE IF NOT EXISTS `images` (
+  `id` int(11) NOT NULL,
+  `imgdata` longblob,
+  `imgtype` varchar(20) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -82,19 +84,9 @@ CREATE TABLE IF NOT EXISTS `produkte` (
   `Bezeichnung` varchar(45) DEFAULT NULL,
   `KategorieID` int(11) DEFAULT NULL,
   `Anbieter` int(11) DEFAULT NULL,
-  `Text` varchar(255) DEFAULT NULL,
-  `Startpreis` double DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
-
---
--- Daten für Tabelle `produkte`
---
-
-INSERT INTO `produkte` (`PID`, `Bezeichnung`, `KategorieID`, `Anbieter`, `Text`, `Startpreis`) VALUES
-(1, 'Fifa 16', 6, 1, 'Dies ist ein Super Spiel fÃ¼r die PS4', 35),
-(2, 'BMW 118i', 4, 1, 'Sehr gepflegt', 7500),
-(3, 'Kugelschreiber', 10, 1, 'Schreibt sehr gut', 1),
-(4, 'Bleistift', 10, 1, 'Schreibt nicht gut', 1);
+  `Startpreis` double DEFAULT NULL,
+  `Text` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 --
 -- Trigger `produkte`
@@ -102,7 +94,7 @@ INSERT INTO `produkte` (`PID`, `Bezeichnung`, `KategorieID`, `Anbieter`, `Text`,
 DELIMITER $$
 CREATE TRIGGER `produkte_AFTER_INSERT` AFTER INSERT ON `produkte`
  FOR EACH ROW BEGIN
-INSERT INTO auktion(Produkt, aktuelles_gebot) VALUES(new.PID, new.Startpreis);
+	INSERT INTO auktion (Produkt, aktuelles_Gebot) VALUES (new.pid, new.startpreis);
 END
 $$
 DELIMITER ;
@@ -117,16 +109,14 @@ CREATE TABLE IF NOT EXISTS `user` (
   `uid` int(11) NOT NULL,
   `Username` varchar(45) DEFAULT NULL,
   `Passwort` varchar(45) DEFAULT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 --
 -- Daten für Tabelle `user`
 --
 
 INSERT INTO `user` (`uid`, `Username`, `Passwort`) VALUES
-(1, 'Marco', '123'),
-(2, 'Test', '123'),
-(3, 'Karl', '123');
+(23, '1234', '1234');
 
 --
 -- Indizes der exportierten Tabellen
@@ -136,7 +126,15 @@ INSERT INTO `user` (`uid`, `Username`, `Passwort`) VALUES
 -- Indizes für die Tabelle `auktion`
 --
 ALTER TABLE `auktion`
-  ADD PRIMARY KEY (`AuktionID`);
+  ADD PRIMARY KEY (`AuktionID`),
+  ADD KEY `Höchstbietender_idx` (`Höchstbietender`),
+  ADD KEY `Produkt_idx` (`Produkt`);
+
+--
+-- Indizes für die Tabelle `images`
+--
+ALTER TABLE `images`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indizes für die Tabelle `kategorie`
@@ -148,7 +146,9 @@ ALTER TABLE `kategorie`
 -- Indizes für die Tabelle `produkte`
 --
 ALTER TABLE `produkte`
-  ADD PRIMARY KEY (`PID`);
+  ADD PRIMARY KEY (`PID`),
+  ADD KEY `Anbieter_idx` (`Anbieter`),
+  ADD KEY `Kategorie_idx` (`KategorieID`);
 
 --
 -- Indizes für die Tabelle `user`
@@ -165,7 +165,12 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `auktion`
 --
 ALTER TABLE `auktion`
-  MODIFY `AuktionID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `AuktionID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=26;
+--
+-- AUTO_INCREMENT für Tabelle `images`
+--
+ALTER TABLE `images`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT für Tabelle `kategorie`
 --
@@ -175,12 +180,31 @@ ALTER TABLE `kategorie`
 -- AUTO_INCREMENT für Tabelle `produkte`
 --
 ALTER TABLE `produkte`
-  MODIFY `PID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
+  MODIFY `PID` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=39;
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+  MODIFY `uid` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=24;
+--
+-- Constraints der exportierten Tabellen
+--
+
+--
+-- Constraints der Tabelle `auktion`
+--
+ALTER TABLE `auktion`
+  ADD CONSTRAINT `Höchstbietender` FOREIGN KEY (`Höchstbietender`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `Produkt` FOREIGN KEY (`Produkt`) REFERENCES `produkte` (`PID`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints der Tabelle `produkte`
+--
+ALTER TABLE `produkte`
+  ADD CONSTRAINT `Anbieter` FOREIGN KEY (`Anbieter`) REFERENCES `user` (`uid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `Kategorie` FOREIGN KEY (`KategorieID`) REFERENCES `kategorie` (`KID`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_anbieter` FOREIGN KEY (`Anbieter`) REFERENCES `user` (`uid`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
