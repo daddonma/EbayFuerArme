@@ -65,7 +65,7 @@
                         <textarea rows="10"  class="form-control" name="beschreibung">
                         </textarea>
                     </div>
-                  
+
 
                 </div>
 
@@ -77,9 +77,9 @@
                         <input type="text" name="startpreis" value="" class="form-control"><br>
                     </div>
                 </div>
-                
+
                 <div class="row">
-<<<<<<< HEAD
+
                     <div class="col-sm-1">
                         <label for="Angebotsende">Angebotsende</label> 
                     </div>
@@ -87,7 +87,6 @@
                         <input type="date" name="ende" value="" class="form-control"><br>
                     </div>
                 </div>
-=======
                 <div class="col-sm-12">
                     <h1>Bild hochladen</h1>
 
@@ -101,79 +100,74 @@
 
                     </form>
                 </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
             </div>
-                
->>>>>>> KachelListe
-                <div class="row">
-                    <div class="col-sm-2">
-                        <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-2">
-                        <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
-                    </div>
-                </div>
-            </form>
-            
-            <?php
-            if (isset($_POST['kategorie'])) {
-                $bezeichnung = $_POST['bezeichnung'];
-                $kategorie = $_POST['kategorie'];
-                $beschreibung = $_POST['beschreibung'];
-                $starpreis = $_POST['startpreis'];
-                $angebotsende = $_POST['ende'];
-
-                $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
-                        . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
-
-<<<<<<< HEAD
-=======
-                echo $insert;
->>>>>>> KachelListe
-                //echo $insert;
-                if ($dbConnect->query($insert) === TRUE) {
-                    $update_auktion_date = "UPDATE AUKTION SET Auktion_Ende = '".$angebotsende ."' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='".trim($bezeichnung)."' AND text='".trim($beschreibung)."');";
-                    if($dbConnect->query($update_auktion_date) === TRUE) {
-                         echo "Auktion erfolgreich gestartet";
-                    }   else {
-                        echo "Fehler beim Eintragen des Angebotsendes";
-                    }
-   
-                } else {
-                    echo "Fehler beim Speichern des Produktes";
-                }
-            }
-
-
-            if (array_key_exists('img', $_FILES)) {
-
-                $tmpname = $_FILES['img']['tmp_name'];
-
-                $type = $_FILES['img']['type'];
-
-                $hndFile = fopen($tmpname, "r");
-
-                $data = addslashes(fread($hndFile, filesize($tmpname)));
-
-                $strQuery = "INSERT INTO images
-
-(imgdata,imgtype) VALUES
-
-('$data','$type')";
-
-                if ($dbConnect->query($strQuery) === TRUE) {
-                    echo "Auktion erfolgreich gestartet";
-                } else {
-                    echo "Error";
-                }
-            }
-            ?>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
+            </div>
         </div>
 
 
 
+        <?php
+        if (isset($_POST['kategorie'])) {
+            $bezeichnung = $_POST['bezeichnung'];
+            $kategorie = $_POST['kategorie'];
+            $beschreibung = $_POST['beschreibung'];
+            $starpreis = $_POST['startpreis'];
+            $angebotsende = $_POST['ende'];
 
-    </body>
+            $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
+                    . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
+
+
+            echo $insert;
+
+
+            if ($dbConnect->query($insert) === TRUE) {
+                $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
+                if ($dbConnect->query($update_auktion_date) === TRUE) {
+                    echo "Auktion erfolgreich gestartet";
+                } else {
+                    echo "Fehler beim Eintragen des Angebotsendes";
+                }
+            } else {
+                echo "Fehler beim Speichern des Produktes";
+            }
+        }
+
+
+        if (array_key_exists('img', $_FILES)) {
+
+            $tmpname = $_FILES['img']['tmp_name'];
+
+            $type = $_FILES['img']['type'];
+
+            $hndFile = fopen($tmpname, "r");
+
+            $data = addslashes(fread($hndFile, filesize($tmpname)));
+
+            $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
+
+            if ($dbConnect->query($strQuery) === TRUE) {
+                echo "Auktion erfolgreich gestartet";
+            } else {
+                echo "Error";
+            }
+        }
+        ?>
+
+    </div>
+</form>
+
+
+
+
+</body>
 </html>
 

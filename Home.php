@@ -38,8 +38,9 @@
                 </div>
             </div>
         </nav> 
-<<<<<<< HEAD
-        <div class="row">
+                 <div class="container-fluid">
+            <div class="row">
+                
             <?php
             //Falls nach etwas gesucht wird
             if (isset($_POST["suche"])) {
@@ -66,11 +67,10 @@
                 }
                 //Falls nach nichts gesucht wird   
             } else {
-                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'
-=======
+                $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot, to_days(Auktion_ende) - to_days(current_date()) AS 'Restzeit'"
 
-        <div class="container-fluid">
-            <div class="row">
+?>
+   
 
         <?php
         //Falls nach etwas gesucht wird
@@ -99,12 +99,13 @@
             //Falls nach nichts gesucht wird   
         } else {
             $query = "SELECT produkte.PID, produkte.Bezeichnung AS 'Bezeichnung', kategorie.Bezeichnung AS 'Kategorie', user.Username AS 'Anbieter', auktion.aktuelles_gebot
->>>>>>> KachelListe
-                      FROM produkte, kategorie, user, auktion
+
+                            FROM produkte, kategorie, user, auktion
                       WHERE produkte.Anbieter = User.uid AND produkte.KategorieID = kategorie.KID AND produkte.PID = auktion.Produkt;";
         }
         $result = mysqli_query($dbConnect, $query);
         ?>
+                
         <form action="Home.php" method="POST" >
             <div class="row">
                 <div class="col-sm-6">
@@ -119,37 +120,14 @@
                         <option>Anbieter</option>
                     </select>
                 </div>
-<<<<<<< HEAD
-            </form>           
         </div>
-        <div>
-            Angebotene Artikel: <br>
-            <table class="table table-striped table-bordered table-hover table-condensed active">
-                <th>
-                    <b> Bezeichnung </b>
-                </th>
-                <th>
-                    <b>Kategorie</b>
-                </th>
-                <th>
-                    <b> Anbieter</b>
-                </th>
-                <th>
-                    <b>Aktuelles Gebot</b>
-                </th>
-                <th>
-                    <b>Restzeit (Tage)</b>
-                </th>
-=======
-            </div>
-            <div class="row">
+                        </form>            
+
+      
                 <div class="col-sm-12">
                     <input type="submit" value="suchen" class="btn btn-primary btn-block" >
                 </div>
-            </div>
-        </form>
             
->>>>>>> KachelListe
                 <?php
                 while ($row = mysqli_fetch_row($result)) {
                     $produktID = $row[0];
@@ -160,56 +138,8 @@
                     $restzeit = $row[5];
                     //echo $row[1].'<br />';
                     ?>
-<<<<<<< HEAD
-                    <tr>
-                        <td>
-                            <?php
-                            echo $bezeichnung;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $kategorie;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $anbieter;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            echo $gebot;
-                            ?>
-                        </td>
-                        <td>
-                            <?php
-                            if($restzeit >0) {
-                                echo $restzeit;
-                            } else {
-                                echo "<b><font color=red>abgelaufen</font></b>";
-                            }
-                            ?>
-                        </td>
-                        <td>
-                          <!--  <input type="button" value="Produkt ansehen"></input> -->
-                            <a class="btn btn-primary" href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
-                        </td>
-                    </tr>
-                    <?php
-                }
-                ?>
-            </table>
-            <form action="newProduct.php">
-                <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
-                <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
-            </form>
-        </div>
-    </body>
-=======
-
-
-                    <div class="col-sm-2">
+        
+                            <div class="col-sm-2">
                         <div class="panel panel-primary">
                             <div class="panel-body"><img src="http://placehold.it/150x80?text=IMAGE" class="img-responsive" style="width:100%" alt="Image"></div>
                             <div class="panel-footer">
@@ -226,6 +156,28 @@
                         </div>
 
                     </div>
+                 
+                            <?php
+                            if($restzeit >0) {
+                                echo $restzeit;
+                            } else {
+                                echo "<b><font color=red>abgelaufen</font></b>";
+                            }
+                            ?>
+
+                          <!--  <input type="button" value="Produkt ansehen"></input> -->
+                            <a class="btn btn-primary" href="ShowProduct.php?Artikel=<?php echo $produktID ?>">Artikel ansehen</a>
+            
+                    <?php
+                }
+                ?>
+            <form action="newProduct.php">
+                <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
+                <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
+            </form>
+
+
+
             
                 <!--  <input type="button" value="Produkt ansehen"></input> -->
 
@@ -233,7 +185,6 @@
         }
         ?>
                     </div> 
-            </div>
         
         <form action="newProduct.php">
             <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
@@ -242,5 +193,4 @@
     </div>
 
 </body>
->>>>>>> KachelListe
 </html>
