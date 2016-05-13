@@ -19,6 +19,26 @@
                 <img src="CSS/Images/platzhalter.svg" class="img-thumbnail">
                 <img src='img_get.php?id=0'>
             </div>
+            
+            <?php
+
+
+
+$id = intval($_GET['id']);
+
+$strQuery= "select imgdata,imgtype
+
+from images where id=$id";
+
+$result=mysql_query($strQuery);
+
+$row=mysql_fetch_assoc($result);
+
+header("Content-type: {$row['imgtype']}");
+
+echo $row['imgdata'];
+
+?>
             <?php
             /*
              * To change this license header, choose License Headers in Project Properties.

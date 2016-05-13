@@ -6,28 +6,29 @@
         <link rel="stylesheet" type="text/css" href="CSS/customCSS.css" />
     </head>
     <body> 
+
+        <!-- Navigation bar-->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="home.php">PayBay</a>
+                </div>
+                <ul class="nav navbar-nav">
+                </ul>
+            </div>
+        </nav>
+        <!-- Navigation bar ending -->
+
+        <!-- Datenbank Verbindungsaufbau -->
+        <?php
+        session_start();
+        $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysqli_error());
+        $kategorien = "SELECT KID, Bezeichnung FROM kategorie";
+        $result = mysqli_query($dbConnect, $kategorien);
+        ?>
+
         <div class="container-fluid">
 
-            <nav class="navbar navbar-inverse">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand" href="home.php">PayBay</a>
-                    </div>
-                    <ul class="nav navbar-nav">
-
-                    </ul>
-                </div>
-
-            </nav>
-
-
-            <?php
-            session_start();
-            $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysqli_error());
-            $kategorien = "SELECT KID, Bezeichnung FROM kategorie";
-            $result = mysqli_query($dbConnect, $kategorien);
-            ?>
-            <link rel="stylesheet" type="text/css" href="Style.css" />
 
             <form action ="newProduct.php" method="POST">
                 <div class="row">
@@ -87,87 +88,89 @@
                         <input type="date" name="ende" value="" class="form-control"><br>
                     </div>
                 </div>
+                
+                   <?php
+                        if (isset($_POST['kategorie'])) {
+                            $bezeichnung = $_POST['bezeichnung'];
+                            $kategorie = $_POST['kategorie'];
+                            $beschreibung = $_POST['beschreibung'];
+                            $starpreis = $_POST['startpreis'];
+                            $angebotsende = $_POST['ende'];
+
+                            $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
+                                    . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
+
+
+                            echo $insert;
+
+
+                            if ($dbConnect->query($insert) === TRUE) {
+                                $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
+                                if ($dbConnect->query($update_auktion_date) === TRUE) {
+                                    echo "Auktion erfolgreich gestartet";
+                                } else {
+                                    echo "Fehler beim Eintragen des Angebotsendes";
+                                }
+                            } else {
+                                echo "Fehler beim Speichern des Produktes";
+                            }
+
+
+                            if (array_key_exists('img', $_FILES)) {
+
+                                $tmpname = $_FILES['img']['tmp_name'];
+
+                                $type = $_FILES['img']['type'];
+
+                                $hndFile = fopen($tmpname, "r");
+
+                                $data = addslashes(fread($hndFile, filesize($tmpname)));
+
+                                $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
+
+                                if ($dbConnect->query($strQuery) === TRUE) {
+                                    echo "Auktion erfolgreich gestartet";
+                                } else {
+                                    echo "Error";
+                                }
+                            } else {
+                                echo "Fehler beim Speichern des Produktes";
+                            }
+                        }
+                        ?>
+
+
                 <div class="col-sm-12">
                     <h1>Bild hochladen</h1>
 
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>"
-
-                          enctype="multipart/form-data">
+                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 
                         Bilddatei:<br />
 
                         <input type="file" name="img" ><p>
 
+                            </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
+                            </div>
+                        </div>
+
+
+
+                     
                     </form>
+
                 </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-2">
-                <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
-            </div>
-        </div>
-
-
-
-        <?php
-        if (isset($_POST['kategorie'])) {
-            $bezeichnung = $_POST['bezeichnung'];
-            $kategorie = $_POST['kategorie'];
-            $beschreibung = $_POST['beschreibung'];
-            $starpreis = $_POST['startpreis'];
-            $angebotsende = $_POST['ende'];
-
-            $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
-                    . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
-
-
-            echo $insert;
-
-
-            if ($dbConnect->query($insert) === TRUE) {
-                $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
-                if ($dbConnect->query($update_auktion_date) === TRUE) {
-                    echo "Auktion erfolgreich gestartet";
-                } else {
-                    echo "Fehler beim Eintragen des Angebotsendes";
-                }
-            } else {
-                echo "Fehler beim Speichern des Produktes";
-            }
-        }
-
-
-        if (array_key_exists('img', $_FILES)) {
-
-            $tmpname = $_FILES['img']['tmp_name'];
-
-            $type = $_FILES['img']['type'];
-
-            $hndFile = fopen($tmpname, "r");
-
-            $data = addslashes(fread($hndFile, filesize($tmpname)));
-
-            $strQuery = "INSERT INTO images (imgdata,imgtype) VALUES('$data','$type')";
-
-            if ($dbConnect->query($strQuery) === TRUE) {
-                echo "Auktion erfolgreich gestartet";
-            } else {
-                echo "Error";
-            }
-        }
-        ?>
-
-    </div>
-</form>
 
 
 
 
-</body>
-</html>
+                </body>
+                </html>
 
