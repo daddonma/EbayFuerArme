@@ -29,8 +29,8 @@
 
         <div class="container-fluid">
 
-
-            <form action ="newProduct.php" method="POST" enctype="multipart/form-data">
+            <div> Bitte füllen Sie alle Felder aus und laden Sie ein Bild hoch</div>
+            <form action ="newProduct.php?createProduct=true" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-1">
                         <label for="bezeichnung">Artikelbezeichnung: </label> </div>
@@ -98,17 +98,6 @@
                         <input type="file" name="image" value="" class="form-control"><br>
                     </div>
                 </div>
-                
-                <!--<div class="col-sm-12">
-                    <h1>Bild hochladen</h1>
-
-                    <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
-
-                        Bilddatei:<br />
-
-                        <input type="file" name="img" ><p>
-
-                            </div>-->
                         <div class="row">
                             <div class="col-sm-2">
                                 <input type="submit" value="Angebot erstellen" class="btn btn-primary btn-block">
@@ -128,8 +117,9 @@
                 </div>
 
                 <?php
-                if (isset($_POST['kategorie'])) {
-                    $bezeichnung = $_POST['bezeichnung'];
+                if (isset($_GET['createProduct'])) {
+                  if($_POST['bezeichnung'] != "" && $_POST['kategorie']!="" && $_POST['beschreibung'] !="" && $_POST['startpreis'] != ""  && $_POST['ende'] != "") {
+                         $bezeichnung = $_POST['bezeichnung'];
                     $kategorie = $_POST['kategorie'];
                     $beschreibung = $_POST['beschreibung'];
                     $starpreis = $_POST['startpreis'];
@@ -153,6 +143,7 @@
                             
                             $image = addslashes(file_get_contents($_FILES['image']['tmp_name'])); 
                             $image_name = addslashes($_FILES['image']['name']);
+                            
                             $img_query = "INSERT INTO `images` (`ImageID`, `datei`, `name`) VALUES (".$image_id.", '{$image}', '{$image_name}')";
                             echo "Auktion erfolgreich gestartet";
                            //echo $img_query;
@@ -176,6 +167,11 @@
                     } else {
                         echo "Fehler beim Speichern des Produktes";
                     }
+                 } else {
+                     echo "Sie müssen alle Felder ausfüllen und ein Bild hochladen";
+                 }
+                    
+                   
 
 
                 }
