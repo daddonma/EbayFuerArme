@@ -24,7 +24,7 @@ and open the template in the editor.
 
     </head>
     <body class="background-img">
-        <div class="container-fluid">neu
+        <div class="container-fluid">
 
             <div class="row">
 
@@ -41,7 +41,7 @@ and open the template in the editor.
 
                             </input><br>
                             <span id="authFail" style="color: red"> Benutzername und/oder Passwort falsch. Bitte erneut versuchen!</span>
-
+                           
                         </div>
                     </div>
                 </div>

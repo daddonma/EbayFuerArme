@@ -18,7 +18,7 @@ $(document).ready(function(){
 		var data = "pw="+pw+"&username="+username;
 		
                 $.ajax({
-                url: 'ajax_login.php',
+                url: 'Ajax/ajax_login.php',
 				data: data,
                 success: function(data) 
                 {
@@ -30,7 +30,7 @@ $(document).ready(function(){
                     }
 						
                 },
-				type: 'POST'
+		type: 'POST'
             });
 	});	
 

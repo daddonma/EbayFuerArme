@@ -27,9 +27,7 @@
                     <div class="col-sm-3">
                         <ul class="nav navbar-nav">
                             <li>
-                                <?php
-                                echo "Eingeloggt  als " . $_SESSION['username'] . "<br>";
-                                ?>
+                                <span> Eingeloggt als <?php echo  $_SESSION['username'];?><a href="index.php">(ausloggen)</a></span>
                             </li>
                         </ul>
                     </div>
