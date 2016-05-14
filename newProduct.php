@@ -107,7 +107,7 @@
                             <div class="col-sm-2">
                                 <a href="Home.php" class="btn btn-primary btn-block">Zurück</a>
                             </div>
-                        </div
+                        </div>
 
 
 
@@ -118,25 +118,30 @@
 
                 <?php
                 if (isset($_GET['createProduct'])) {
-                  if($_POST['bezeichnung'] != "" && $_POST['kategorie']!="" && $_POST['beschreibung'] !="" && $_POST['startpreis'] != ""  && $_POST['ende'] != "") {
-                         $bezeichnung = $_POST['bezeichnung'];
+                  //überprüfen, ob alle Felder befüllt
+                    if($_POST['bezeichnung'] != "" && $_POST['kategorie']!="" && $_POST['beschreibung'] !="" && $_POST['startpreis'] != ""  && $_POST['ende'] != "") {
+                    
+                    $bezeichnung = $_POST['bezeichnung'];
                     $kategorie = $_POST['kategorie'];
                     $beschreibung = $_POST['beschreibung'];
                     $starpreis = $_POST['startpreis'];
                     $angebotsende = $_POST['ende'];
                     
-
-                    $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
+                    //aktuelles Datum
+                    $timestamp = time();
+                    $datum = date("Y-m-d", $timestamp);
+                    
+                    //check ob Angebotsende in der Zukunft liegt
+                    if($datum < $angebotsende) {
+                        $insert = "INSERT INTO produkte(Bezeichnung, KategorieID, Anbieter, Text, Startpreis) VALUES"
                             . "('" . trim($bezeichnung) . "', " . trim($kategorie) . ", " . $_SESSION['uid'] . ", '" . trim($beschreibung) . "', " . $starpreis . ");";
 
-
-                    //echo $insert;
-
-
                     if ($dbConnect->query($insert) === TRUE) {
-                        $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
-                        if ($dbConnect->query($update_auktion_date) === TRUE) {
+                            //Angebotsende in die Tabelle auktion zu dem jeweiligen Produkt hinzufügen
+                            $update_auktion_date = "UPDATE AUKTION SET Auktion_ende = '" . $angebotsende . "' WHERE PRODUKT = (SELECT PID FROM Produkte WHERE Bezeichnung='" . trim($bezeichnung) . "' AND text='" . trim($beschreibung) . "');";
+                            if ($dbConnect->query($update_auktion_date) === TRUE) {
                             
+                            //Bild Upload
                             $query_max_image = "SELECT max(imageID) AS 'maxImage' FROM images;";
                             $max_image = mysqli_fetch_row(mysqli_query($dbConnect, $query_max_image))[0];
                             $image_id = $max_image+1;
@@ -167,6 +172,10 @@
                     } else {
                         echo "Fehler beim Speichern des Produktes";
                     }
+                    } else {
+                        echo "Das Datum muss in der Zukunft liegen";
+                    }
+                    
                  } else {
                      echo "Sie müssen alle Felder ausfüllen und ein Bild hochladen";
                  }
