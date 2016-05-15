@@ -20,8 +20,10 @@ $(document).ready(function(){
                 $.ajax({
                 url: 'Ajax/ajax_login.php',
 				data: data,
+                             
                 success: function(data) 
                 {
+                       
                     if(data == false) {
 			$('#authFail').show();			
                     } else {

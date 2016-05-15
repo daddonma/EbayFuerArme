@@ -19,6 +19,7 @@
             <?php
            
             session_start();
+             echo $_SESSION['uid'];
             $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
             if (!isset($_GET["Artikel"])) {
 
