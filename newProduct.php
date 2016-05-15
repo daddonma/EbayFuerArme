@@ -25,6 +25,8 @@
         $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysqli_error());
         $kategorien = "SELECT KID, Bezeichnung FROM kategorie";
         $result = mysqli_query($dbConnect, $kategorien);
+       
+        //echo $_SESSION['uid'];
         ?>
 
         <div class="container-fluid">

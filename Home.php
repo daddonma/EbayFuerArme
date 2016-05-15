@@ -5,6 +5,7 @@
     <?php
     session_start();
     $dbConnect = mysqli_connect("localhost", "root", "", "ebayfuerarme") or die(mysql_error());
+
     ?>
     <head>
         <meta charset="UTF-8">
@@ -27,7 +28,7 @@
                     <div class="col-sm-3">
                         <ul class="nav navbar-nav">
                             <li>
-                                <span> Eingeloggt als <?php echo  $_SESSION['username'];?><a href="index.php">(ausloggen)</a></span>
+                                <span> Eingeloggt als <?php echo  $_SESSION['username'];?><a href="index.php?logout=true">(ausloggen)</a></span>
                             </li>
                         </ul>
                     </div>
