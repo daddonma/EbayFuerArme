@@ -120,8 +120,10 @@
                                                             <?php 
                                                         if($restzeit >0) {
                                                             echo "Restzteit: " . $restzeit . " Tage";
+                                                        } elseif ($restzeit==0) {
+                                                            echo "<b><font color=red>Auktion endet heute</font></b>";
                                                         } else {
-                                                            echo "<b><font color=red>abgelaufen</font></b>";
+                                                        echo "<b><font color=red>abgelaufen</font></b>";
                                                         }
                                                         ?>
                                                         </div>
@@ -137,9 +139,8 @@
                         ?>
                            
     
-
-</div> 
-                                 <form action="newProduct.php">
+ </div> 
+                <form action="newProduct.php">
                 <input type="submit" value = "neues Produkt anbieten" class="btn btn-primary">
                 <!--<input type="textarea" id="123" style="widht:500px; height: 400px">-->
             </form>
