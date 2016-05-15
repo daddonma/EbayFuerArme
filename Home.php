@@ -58,10 +58,6 @@
         </div>
     </form>            
 
-      <?php
- 
-   echo   $_SESSION['uid']
-?>
 
     <?php
     

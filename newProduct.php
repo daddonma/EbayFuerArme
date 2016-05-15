@@ -31,11 +31,6 @@
         //echo $_SESSION['uid'];
         ?>
         
-             <?php 
-             session_start();
-              echo    $_SESSION['uid']
-
-        ?>
 
         <div class="container-fluid">
 
