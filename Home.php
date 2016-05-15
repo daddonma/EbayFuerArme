@@ -57,9 +57,14 @@
         </div>
     </form>            
 
-      
+      <?php
+ 
+   echo   $_SESSION['uid']
+?>
 
     <?php
+    
+
          
             //Falls nach etwas gesucht wird
             if (isset($_POST["suche"])) {
