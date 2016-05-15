@@ -108,7 +108,7 @@
                             ?>
                             <div class="col-sm-2">
                                 <div class="panel panel-primary">
-                                    <div class="panel-body"><?php echo '<img src="data:image/jpeg;base64,'.base64_encode($image) .'" class="img-responsive style="width:100%" alt="Image"">';?></div>
+                                    <div class="panel-body"><?php echo '<img src="data:image/jpeg;base64,'.base64_encode($image) .'" class="img-responsive" style=" max-height:200px;min-height:200px;width:100%;;" alt="Image"">';?></div>
                                                 <div class="panel-footer">
                                                         <div class="row">
                                                             <h4 class="text-right"><?php echo $bezeichnung ?></h4>
